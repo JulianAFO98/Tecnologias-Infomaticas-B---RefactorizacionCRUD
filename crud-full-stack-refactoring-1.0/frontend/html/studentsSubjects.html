@@ -1,0 +1,66 @@
+<!-- frontend/html/studentsSubjects.html -->
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Inscripción de Estudiantes a Materias</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="../img/favicon.png">
+  <link rel="stylesheet" href="../css/w3.css" />
+  <link rel="stylesheet" href="../css/styles.css" />
+  <script type="module" src="../js/controllers/studentsSubjectsController.js"></script>
+</head>
+
+<body class="w3-container">
+
+  <h2 class="w3-center w3-margin-top">Asignación de Estudiantes - Materias</h2>
+
+  <form id="relationForm" class="w3-card w3-padding w3-margin-bottom w3-light-grey">
+    <input type="hidden" id="relationId" />
+
+    <div class="w3-row-padding">
+      <div class="w3-third">
+        <label>Estudiante</label>
+        <select id="studentIdSelect" class="w3-select" required>
+          <option value="" disabled selected>Seleccionar estudiante</option>
+          <!-- Opciones se cargan dinámicamente desde JS -->
+        </select>
+      </div>
+      <div class="w3-third">
+        <label>Materia</label>
+        <select id="subjectIdSelect" class="w3-select" required>
+          <option value="" disabled selected>Seleccionar materia</option>
+          <!-- Opciones se cargan dinámicamente desde JS -->
+        </select>
+      </div>
+      <div class="w3-third">
+        <label>Aprobado</label>
+        <input type="checkbox" id="approved" class="w3-check" />
+      </div>
+    </div>
+
+    <div class="w3-margin-top">
+      <button class="w3-button w3-green" type="submit">Guardar</button>
+      <button id="cancelBtn" class="w3-button w3-grey" type="reset">Cancelar</button>
+    </div>
+  </form>
+
+  <table class="w3-table-all w3-hoverable w3-card">
+    <thead>
+      <tr class="w3-light-blue">
+        <th>Estudiante</th>
+        <th>Materia</th>
+        <th>Aprobado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody id="relationTableBody"></tbody>
+  </table>
+
+  <footer class="w3-center w3-margin-top">
+    <a class="w3-btn w3-black" href="../../index.html">Volver al Panel Principal</a>
+  </footer>
+  
+</body>
+</html>
