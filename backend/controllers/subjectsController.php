@@ -19,6 +19,19 @@ function handleGet($conn)
     {
         $subject = getSubjectById($conn, $input['id']);
         echo json_encode($subject);
+    }else if (isset($_GET['page']) && isset($_GET['limit'])) 
+    {
+        $page = (int)$_GET['page'];
+        $limit = (int)$_GET['limit'];
+        $offset = ($page - 1) * $limit;
+
+        $students = getPaginatedSubjects($conn, $limit, $offset);
+        $total = getTotalSubjects($conn);
+
+        echo json_encode([
+            'students' => $students, // ya es array
+            'total' => $total        // ya es entero
+        ]);
     } 
     else 
     {

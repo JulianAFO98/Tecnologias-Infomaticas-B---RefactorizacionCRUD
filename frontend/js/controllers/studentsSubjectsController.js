@@ -12,12 +12,18 @@ import { studentsAPI } from '../api/studentsAPI.js';
 import { subjectsAPI } from '../api/subjectsAPI.js';
 import { studentsSubjectsAPI } from '../api/studentsSubjectsAPI.js';
 
+let currentPage = 1;
+let totalPages = 1;
+const limit = 5;
+
+
 document.addEventListener('DOMContentLoaded', () => 
 {
     initSelects();
     setupFormHandler();
     setupCancelHandler();
     loadRelations();
+    setupPaginationControls();
 });
 
 async function initSelects() 
@@ -80,6 +86,52 @@ function setupFormHandler()
         }
     });
 }
+
+
+function setupPaginationControls() 
+{
+    document.getElementById('prevPage').addEventListener('click', () => 
+    {
+        if (currentPage > 1) 
+        {
+            currentPage--;
+            loadStudentsSubjetcs();
+        }
+    });
+
+    document.getElementById('nextPage').addEventListener('click', () => 
+    {
+        if (currentPage < totalPages) 
+        {
+            currentPage++;
+            loadStudentsSubjetcs();
+        }
+    });
+
+    document.getElementById('resultsPerPage').addEventListener('change', e => 
+    {
+        currentPage = 1;
+        loadStudentsSubjetcs();
+    });
+}
+
+async function loadStudentsSubjetcs()
+{
+    try 
+    {
+        const resPerPage = parseInt(document.getElementById('resultsPerPage').value, 10) || limit;
+        const data = await studentsAPI.fetchPaginated(currentPage, resPerPage);
+        console.log(data);
+        renderStudentTable(data.students);
+        totalPages = Math.ceil(data.total / resPerPage);
+        document.getElementById('pageInfo').textContent = `Página ${currentPage} de ${totalPages}`;
+    } 
+    catch (err) 
+    {
+        console.error('Error cargando materias y alumnos:', err.message);
+    }
+}
+
 
 function setupCancelHandler()
 {

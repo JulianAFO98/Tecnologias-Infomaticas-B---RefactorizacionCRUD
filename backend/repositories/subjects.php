@@ -27,6 +27,22 @@ function getSubjectById($conn, $id)
     return $result->fetch_assoc(); 
 }
 
+function getPaginatedSubjects($conn, $limit, $offset) 
+{
+    $stmt = $conn->prepare("SELECT * FROM subjects LIMIT ? OFFSET ?");
+    $stmt->bind_param("ii", $limit, $offset);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    return $result->fetch_all(MYSQLI_ASSOC);
+}
+//2.0
+function getTotalSubjects($conn) 
+{
+    $sql = "SELECT COUNT(*) AS subjects FROM subjects";
+    $result = $conn->query($sql);
+    return $result->fetch_assoc()['total'];
+}
+
 function createSubject($conn, $name) 
 {
     $sql = "INSERT INTO subjects (name) VALUES (?)";

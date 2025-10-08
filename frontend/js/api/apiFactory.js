@@ -5,7 +5,7 @@
 *    License     : http://www.gnu.org/licenses/gpl.txt  GNU GPL 3.0
 *    Date        : Mayo 2025
 *    Status      : Prototype
-*    Iteration   : 3.0 ( prototype )
+*    Iteration   : 2.0 ( prototype )
 */
 
 export function createAPI(moduleName, config = {}) 
@@ -30,6 +30,15 @@ export function createAPI(moduleName, config = {})
         {
             const res = await fetch(API_URL);
             if (!res.ok) throw new Error("No se pudieron obtener los datos");
+            return await res.json();
+        },
+        //2.0
+        async fetchPaginated(page = 1, limit = 10)
+        {
+            const url = `${API_URL}&page=${page}&limit=${limit}`;
+            const res = await fetch(url);
+            if (!res.ok)
+                throw new Error("Error al obtener datos paginados");
             return await res.json();
         },
         async create(data)
