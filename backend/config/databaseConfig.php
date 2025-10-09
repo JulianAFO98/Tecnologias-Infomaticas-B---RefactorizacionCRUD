@@ -14,7 +14,7 @@ $user = "student";
 $password = "12345";
 $database = "students";
 
-$conn = new mysqli($host, $user, $password, $database);
+$conn = new mysqli($host, $user, $password, $database); // conexiones simultaneas?
 
 if ($conn->connect_error) 
 {

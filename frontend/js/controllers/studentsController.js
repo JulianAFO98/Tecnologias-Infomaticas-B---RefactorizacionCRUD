@@ -61,7 +61,7 @@ function setupCancelHandler()
 }
   
 
-function setupPaginationControls() 
+function setupPaginationControls() //2.0
 {
     document.getElementById('prevPage').addEventListener('click', () => 
     {

@@ -38,9 +38,9 @@ function getPaginatedSubjects($conn, $limit, $offset)
 //2.0
 function getTotalSubjects($conn) 
 {
-    $sql = "SELECT COUNT(*) AS subjects FROM subjects";
+    $sql = "SELECT COUNT(*) AS total_subjects FROM subjects";
     $result = $conn->query($sql);
-    return $result->fetch_assoc()['total'];
+    return $result->fetch_assoc()['total_subjects'];
 }
 
 function createSubject($conn, $name) 

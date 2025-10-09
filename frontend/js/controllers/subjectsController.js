@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () =>
     loadSubjects();
     setupSubjectFormHandler();
     setupCancelHandler();
-    setupPaginationControls();
+    setupPaginationControls();//2.0
 
 });
 
@@ -57,7 +57,7 @@ function setupSubjectFormHandler()
   });
 }
 
-function setupPaginationControls() 
+function setupPaginationControls() //2.0
 {
     document.getElementById('prevPage').addEventListener('click', () => 
     {
@@ -89,9 +89,9 @@ async function loadSubjetcs()
     try 
     {
         const resPerPage = parseInt(document.getElementById('resultsPerPage').value, 10) || limit;
-        const data = await studentsAPI.fetchPaginated(currentPage, resPerPage);
+        const data = await subjectsAPI.fetchPaginated(currentPage, resPerPage);
         console.log(data);
-        renderStudentTable(data.students);
+        renderSubjectTable(data.subjects);
         totalPages = Math.ceil(data.total / resPerPage);
         document.getElementById('pageInfo').textContent = `Página ${currentPage} de ${totalPages}`;
     } 

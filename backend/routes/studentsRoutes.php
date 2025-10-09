@@ -12,7 +12,7 @@ require_once("./config/databaseConfig.php");
 require_once("./routes/routesFactory.php");
 require_once("./controllers/studentsController.php");
 
-routeRequest($conn);
+routeRequest($conn); // preguntar
 
 /**
  * Ejemplo de como se extiende un archivo de rutas 

@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () =>
     setupFormHandler();
     setupCancelHandler();
     loadRelations();
-    setupPaginationControls();
+    setupPaginationControls();//2.0
 });
 
 async function initSelects() 
@@ -88,7 +88,7 @@ function setupFormHandler()
 }
 
 
-function setupPaginationControls() 
+function setupPaginationControls() //2.0
 {
     document.getElementById('prevPage').addEventListener('click', () => 
     {
@@ -120,9 +120,8 @@ async function loadStudentsSubjetcs()
     try 
     {
         const resPerPage = parseInt(document.getElementById('resultsPerPage').value, 10) || limit;
-        const data = await studentsAPI.fetchPaginated(currentPage, resPerPage);
-        console.log(data);
-        renderStudentTable(data.students);
+        const data = await studentsSubjectsAPI.fetchPaginated(currentPage, resPerPage);
+        renderRelationsTable(data.students_subjects);
         totalPages = Math.ceil(data.total / resPerPage);
         document.getElementById('pageInfo').textContent = `Página ${currentPage} de ${totalPages}`;
     } 
@@ -192,6 +191,7 @@ async function loadRelations()
 
 function renderRelationsTable(relations) 
 {
+    console.log(relations)
     const tbody = document.getElementById('relationTableBody');
     tbody.replaceChildren();
 
