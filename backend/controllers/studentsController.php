@@ -10,6 +10,8 @@
 */
 
 require_once("./repositories/students.php");
+require_once("./repositories/studentsSubjects.php");
+
 
 // Para GET (usamos la variable superglobal $_GET):
 //https://www.php.net/manual/es/language.variables.superglobals.php
@@ -79,15 +81,31 @@ function handleDelete($conn)
 {
     $input = json_decode(file_get_contents("php://input"), true);
 
-    $result = deleteStudent($conn, $input['id']);
-    if ($result['deleted'] > 0) 
-    {
-        echo json_encode(["message" => "Eliminado correctamente"]);
-    } 
-    else 
-    {
-        http_response_code(500);
-        echo json_encode(["error" => "No se pudo eliminar"]);
+    #pregunto por si tiene alguna materia asociada
+    $hasSubjectsAssociated =  getSubjectsByStudent($conn,$input['id']);
+    error_log("Datos recibidos: " . json_encode($hasSubjectsAssociated));
+    #Array vacio -> elimino el estudiante o falla por error 500
+    if(empty($hasSubjectsAssociated)){
+      $result = deleteStudent($conn, $input['id']);
+      if ($result['deleted'] > 0) 
+      {
+          echo json_encode(["message" => "Eliminado correctamente"]);
+      } 
+      else 
+      {
+          http_response_code(500);
+          echo json_encode(["error" => "No se pudo eliminar"]);
+      }
+    }else {
+        #Si el array no esta vacio 
+
+        #Tomo la primer materia, puede tener muchas asociadas
+        $firstSubjectName = $hasSubjectsAssociated[0]['name'];
+        #Envio un 202, aceptado pero no lo dejo eliminar, no lo tomo como un error de la familia 400
+        http_response_code(202);
+        #Envio el "error" y la materia asociada
+        echo json_encode(["error" => "No se puede eliminar estudiantes con materias",
+                          "materia" => $firstSubjectName]);
     }
 }
 ?>

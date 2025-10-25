@@ -179,7 +179,10 @@ async function confirmDelete(id)
   
     try 
     {
-        await studentsAPI.remove(id);
+        const res = await studentsAPI.remove(id);
+        if(res.materia){
+            alert(`No se pudo eliminar estudiante,materia asociada:\n-${res.materia}`)
+        }
         loadStudents();
     } 
     catch (err) 

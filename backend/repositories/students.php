@@ -46,6 +46,8 @@ function getStudentById($conn, $id)
     return $result->fetch_assoc(); 
 }
 
+
+
 function createStudent($conn, $fullname, $email, $age) 
 {
     $sql = "INSERT INTO students (fullname, email, age) VALUES (?, ?, ?)";
@@ -61,6 +63,10 @@ function createStudent($conn, $fullname, $email, $age)
         'id' => $conn->insert_id
     ];
 }
+
+
+
+
 
 function updateStudent($conn, $id, $fullname, $email, $age) 
 {
