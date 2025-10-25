@@ -51,7 +51,6 @@ async function initSelects()
             option.textContent = sub.name;
             subjectSelect.appendChild(option);
         });
-        document.getElementById('pageInfo').textContent = `Página ${currentPage} de ${totalPages}`;
 
     } 
     catch (err) 
@@ -97,7 +96,7 @@ function setupPaginationControls() //2.0
         if (currentPage > 1) 
         {
             currentPage--;
-            loadStudentsSubjetcs();
+            loadStudentsSubjectsPaginated();
         }
     });
 
@@ -106,24 +105,23 @@ function setupPaginationControls() //2.0
         if (currentPage < totalPages) 
         {
             currentPage++;
-            loadStudentsSubjetcs();
+            loadStudentsSubjectsPaginated();
         }
     });
 
     document.getElementById('resultsPerPage').addEventListener('change', e => 
     {
         currentPage = 1;
-        loadStudentsSubjetcs();
+        loadStudentsSubjectsPaginated();
     });
 }
 
-async function loadStudentsSubjetcs()
+async function loadStudentsSubjectsPaginated()
 {
     try 
     {
         const resPerPage = parseInt(document.getElementById('resultsPerPage').value, 10) || limit;
         const data = await studentsSubjectsAPI.fetchPaginated(currentPage, resPerPage);
-        renderRelationsTable(data.students_subjects);
         totalPages = Math.ceil(data.total / resPerPage);
         document.getElementById('pageInfo').textContent = `Página ${currentPage} de ${totalPages}`;
         data.students_subjects.forEach(rel => 
@@ -187,8 +185,8 @@ async function loadRelations()
         {
             rel.approved = Number(rel.approved);
         });
-        
         renderRelationsTable(relations);
+        document.getElementById('pageInfo').textContent = `Página ${currentPage} de ${totalPages}`;
     } 
     catch (err) 
     {
