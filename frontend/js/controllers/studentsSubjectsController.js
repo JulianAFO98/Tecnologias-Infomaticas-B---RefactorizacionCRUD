@@ -51,6 +51,8 @@ async function initSelects()
             option.textContent = sub.name;
             subjectSelect.appendChild(option);
         });
+        document.getElementById('pageInfo').textContent = `Página ${currentPage} de ${totalPages}`;
+
     } 
     catch (err) 
     {
@@ -124,6 +126,11 @@ async function loadStudentsSubjetcs()
         renderRelationsTable(data.students_subjects);
         totalPages = Math.ceil(data.total / resPerPage);
         document.getElementById('pageInfo').textContent = `Página ${currentPage} de ${totalPages}`;
+        data.students_subjects.forEach(rel => 
+        {
+            rel.approved = Number(rel.approved);
+        });
+        renderRelationsTable(data.students_subjects);
     } 
     catch (err) 
     {

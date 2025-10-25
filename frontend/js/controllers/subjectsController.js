@@ -64,7 +64,7 @@ function setupPaginationControls() //2.0
         if (currentPage > 1) 
         {
             currentPage--;
-            loadSubjetcs();
+            loadSubjectsPaginated();
         }
     });
 
@@ -73,18 +73,18 @@ function setupPaginationControls() //2.0
         if (currentPage < totalPages) 
         {
             currentPage++;
-            loadSubjetcs();
+            loadSubjectsPaginated();
         }
     });
 
     document.getElementById('resultsPerPage').addEventListener('change', e => 
     {
         currentPage = 1;
-        loadSubjetcs();
+        loadSubjectsPaginated();
     });
 }
 
-async function loadSubjetcs()
+async function loadSubjectsPaginated()
 {
     try 
     {
@@ -115,6 +115,7 @@ async function loadSubjects()
     try
     {
         const subjects = await subjectsAPI.fetchAll();
+        document.getElementById('pageInfo').textContent = `Página ${currentPage} de ${totalPages}`;
         renderSubjectTable(subjects);
     }
     catch (err)
