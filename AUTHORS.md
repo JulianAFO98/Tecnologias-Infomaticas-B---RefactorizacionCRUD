@@ -7,9 +7,9 @@ This project is an educational prototype of a CRUD (Create Read Update and Delet
 ## Developers:
 
 * Julian Agustin Fernandez Ordoqui
-* Matias Plaza
+* Matias Plaza Martínez
 * Tiziano Varas
-* Simon Francano Sanchez
+* Simón Francano Sánchez
  
 
 ## All other contributors and their affiliations:
