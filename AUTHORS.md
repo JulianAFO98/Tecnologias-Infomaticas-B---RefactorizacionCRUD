@@ -9,7 +9,7 @@ This project is an educational prototype of a CRUD (Create Read Update and Delet
 * Julian Agustin Fernandez Ordoqui
 * Matias Plaza
 * Tiziano Varas
-* Simon
+* Simon Francano Sanchez
  
 
 ## All other contributors and their affiliations:

@@ -48,16 +48,29 @@ function handleGet($conn)
 function handlePost($conn) 
 {
     $input = json_decode(file_get_contents("php://input"), true);
+    
+    $email = $input['email'] ?? null;
+    
+    //Valido la existencia del email
+    $existingEmail = getStudentByEmail($conn, $email);
 
-    $result = createStudent($conn, $input['fullname'], $input['email'], $input['age']);
-    if ($result['inserted'] > 0) 
+    if ($existingEmail) {
+        //El email ya existe
+        http_response_code(409);
+        echo json_encode(["error" => "El email ya está registrado en la base de datos."]);
+    }
+    else
     {
-        echo json_encode(["message" => "Estudiante agregado correctamente"]);
-    } 
-    else 
-    {
-        http_response_code(500);
-        echo json_encode(["error" => "No se pudo agregar"]);
+        $result = createStudent($conn, $input['fullname'], $input['email'], $input['age']);
+        if ($result['inserted'] > 0) 
+        {
+            echo json_encode(["message" => "Estudiante agregado correctamente"]);
+        } 
+        else 
+        {
+            http_response_code(500);
+            echo json_encode(["error" => "No se pudo agregar"]);
+        }
     }
 }
 

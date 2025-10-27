@@ -46,7 +46,14 @@ function getStudentById($conn, $id)
     return $result->fetch_assoc(); 
 }
 
-
+function getStudentByEmail($conn, $email) //funcion creada para la validacion del email
+{
+    $stmt = $conn->prepare("SELECT * FROM students WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    return $result->fetch_assoc(); 
+}
 
 function createStudent($conn, $fullname, $email, $age) 
 {
