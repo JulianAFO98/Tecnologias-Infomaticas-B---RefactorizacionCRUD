@@ -111,14 +111,13 @@ function handleDelete($conn)
       }
     }else {
         #Si el array no esta vacio 
-
         #Tomo la primer materia, puede tener muchas asociadas
         $firstSubjectName = $hasSubjectsAssociated[0]['name'];
-        #Envio un 202, aceptado pero no lo dejo eliminar, no lo tomo como un error de la familia 400
-        http_response_code(202);
-        #Envio el "error" y la materia asociada
-        echo json_encode(["error" => "No se puede eliminar estudiantes con materias",
-                          "materia" => $firstSubjectName]);
+        #Envio un 400, peticion invalida
+        http_response_code(400);
+        #Envio el error y la materia asociada
+        echo json_encode(["messageError" => "No se puede eliminar estudiantes con materias",
+                          "errorData" => $firstSubjectName]);
     }
 }
 ?>
