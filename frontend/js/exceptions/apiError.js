@@ -9,7 +9,7 @@
  -cuarto parametros :  envia un dato que en el backend deben llamar como errorData,asignan lo que necesitan mostrar en el front
  si no se recibe un  errorData del backend se envia un string vacio
  Ej: echo json_encode([
-    'errorMessage' => "Solicitud erronea, ingrese los datos nuevamente",
+    'messageError' => "Solicitud erronea, ingrese los datos nuevamente",
     'errorData' => $datoQueDeseoEnviar, 
         ...
     ]);

@@ -6,7 +6,7 @@ This project is an educational prototype of a CRUD (Create Read Update and Delet
 
 ## Developers:
 
-* Julian Agustin Fernandez Ordoqui
+* Julian Agustin Fernandez Ordoqui (Validacion numero 4 -> Eliminacion de un alumno con una materia asociada)
 * Matias Plaza Martínez
 * Tiziano Varas
 * Simón Francano Sánchez
