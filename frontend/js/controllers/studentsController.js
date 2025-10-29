@@ -179,14 +179,19 @@ async function confirmDelete(id)
   
     try 
     {
-        const res = await studentsAPI.remove(id);
-        if(res.materia){
-            alert(`No se pudo eliminar estudiante,materia asociada:\n-${res.materia}`)
-        }
+        await studentsAPI.remove(id);
         loadStudents();
     } 
     catch (err) 
     {
+        /*
+        Error al eliminar un estudiante que tenga materia. Ya que no hay posiblidad en este proyecto de que los errorData se crucen
+        debido a que las validaciones son una por modulo, estoy seguro que mi errorData se debe al error que estoy esperando,
+        sino deberia agregarse algun tipo de validacion extra
+        */
+        if (err.errorData){
+            alert(`No se pudo eliminar un estudiante ya que tenia asociada una materia:\n-${err.errorData}`);
+        }
         console.error('Error al borrar:', err.message);
     }
 }
