@@ -57,7 +57,8 @@ function handlePost($conn)
     if ($existingEmail) {
         //El email ya existe
         http_response_code(409);
-        echo json_encode(["error" => "El email ya está registrado en la base de datos."]);
+        echo json_encode(["messageError" => "El email ya esta en uso",
+                          "errorData" => $email]);
     }
     else
     {
@@ -86,7 +87,8 @@ function handlePut($conn)
     if ($existingEmail) {
         //El email ya existe
         http_response_code(409);
-        echo json_encode(["error" => "El email ya está registrado en la base de datos."]);
+        echo json_encode(["messageError" => "El email ya esta en uso",
+                          "errorData" => $email]);
     }
     else
     {
