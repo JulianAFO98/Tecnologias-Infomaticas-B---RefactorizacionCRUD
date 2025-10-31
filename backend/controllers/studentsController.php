@@ -74,19 +74,32 @@ function handlePost($conn)
     }
 }
 
+
+
 function handlePut($conn) 
 {
     $input = json_decode(file_get_contents("php://input"), true);
 
-    $result = updateStudent($conn, $input['id'], $input['fullname'], $input['email'], $input['age']);
-    if ($result['updated'] > 0) 
+    $email = $input['email'] ?? null;
+    
+    //Valido la existencia del email
+    if ($existingEmail) {
+        //El email ya existe
+        http_response_code(409);
+        echo json_encode(["error" => "El email ya está registrado en la base de datos."]);
+    }
+    else
     {
-        echo json_encode(["message" => "Actualizado correctamente"]);
-    } 
-    else 
-    {
-        http_response_code(500);
-        echo json_encode(["error" => "No se pudo actualizar"]);
+        $result = updateStudent($conn, $input['id'], $input['fullname'], $input['email'], $input['age']);
+        if ($result['updated'] > 0) 
+        {
+            echo json_encode(["message" => "Actualizado correctamente"]);
+        } 
+        else 
+        {
+            http_response_code(500);
+            echo json_encode(["error" => "No se pudo actualizar"]);
+        }
     }
 }
 
