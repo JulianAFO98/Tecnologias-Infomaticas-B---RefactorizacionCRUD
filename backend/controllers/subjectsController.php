@@ -44,6 +44,16 @@ function handlePost($conn)
 {
     $input = json_decode(file_get_contents("php://input"), true);
 
+    $existe= findSubjectByName($conn, $input['name']);
+    error_log("Datos recibidos: " . json_encode($existe));
+
+    if (!empty($existe)) {
+        http_response_code(400);
+        echo json_encode(["messageError" => "Materia duplicada"]);
+        return;
+    }
+
+
     $result = createSubject($conn, $input['name']);
     if ($result['inserted'] > 0) 
     {
@@ -60,7 +70,16 @@ function handlePut($conn)
 {
     $input = json_decode(file_get_contents("php://input"), true);
 
+    $existe= getSubjectById($conn, $input['id']);
+    error_log("Datos recibidos: " . json_encode($existe));
+
+    if (!empty($existe)) {
+        http_response_code(400);
+        echo json_encode(["messageError" => "No es posible modificar, Nombre ya existe"]);
+        return;
+    }
     $result = updateSubject($conn, $input['id'], $input['name']);
+
     if ($result['updated'] > 0) 
     {
         echo json_encode(["message" => "Materia actualizada correctamente"]);

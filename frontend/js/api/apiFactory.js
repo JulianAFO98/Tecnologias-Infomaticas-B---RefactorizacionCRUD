@@ -27,20 +27,7 @@ export function createAPI(moduleName, config = {}) {
             //Caso json invalido o cuerpo de json vacio(no content)
             datos = {}
         }
-        // Contrato API ERROR
-        /*
-         Tiene 3 parametros:
-         primer parametro : El mensaje por defecto que existia previamente -> Error en ${method}
-         segundo parametro: codigo de respuesta, puede servir para algun tipo de validacion
-         tercer parametro:  Un mensaje personalizado recibido por el backend , que deberan llamar messageError en el back
-         Si no se recibe un  messageError del backend se envia un string vacio
-         cuarto parametros :  envia un dato que en el backend deben llamar como errorData -> asignan lo que necesitan mostrar en el front
-         Ej: echo json_encode([
-            'errorData' => $datoQueDeseoEnviar, 
-                ...
-            ]);
-         Si no se recibe un  errorData del backend se envia un string vacio
-        */
+
         if (!res.ok) throw new ApiError(`Error en ${method}`, res.status, datos.messageError ?? "", datos.errorData ?? "");
 
         return datos;
