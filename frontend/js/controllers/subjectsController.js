@@ -52,6 +52,8 @@ function setupSubjectFormHandler()
         }
         catch (err)
         {
+            if (err.messageError)
+             alert(err.messageError);
             console.error(err.message);
         }
   });

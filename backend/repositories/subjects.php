@@ -76,4 +76,18 @@ function deleteSubject($conn, $id)
 
     return ['deleted' => $stmt->affected_rows];
 }
+
+function findSubjectByName($conn, $SubjectName)
+{
+    $sql = "SELECT * FROM subjects WHERE name = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $SubjectName);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    return $result->fetch_assoc(); 
+}
+
+
+
 ?>
