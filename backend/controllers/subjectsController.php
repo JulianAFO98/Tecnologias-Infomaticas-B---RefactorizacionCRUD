@@ -70,7 +70,7 @@ function handlePut($conn)
 {
     $input = json_decode(file_get_contents("php://input"), true);
 
-    $existe= getSubjectById($conn, $input['id']);
+    $existe= findSubjectByName($conn, $input['name']);
     error_log("Datos recibidos: " . json_encode($existe));
 
     if (!empty($existe)) {
