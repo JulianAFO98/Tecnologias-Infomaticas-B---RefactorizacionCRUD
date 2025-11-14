@@ -35,17 +35,24 @@ function handleGet($conn)
 function handlePost($conn) 
 {
     $input = json_decode(file_get_contents("php://input"), true);
-    
-    $result = assignSubjectToStudent($conn, $input['student_id'], $input['subject_id'], $input['approved']);
-    if ($result['inserted'] > 0) 
-    {
-        echo json_encode(["message" => "Asignación realizada"]);
-    }
-    else 
-    {
-        http_response_code(500);
-        echo json_encode(["error" => "Error al asignar"]);
-    }
+
+    if (Uniqueness($conn, $input['student_id'], $input['subject_id'])){
+
+        $result = assignSubjectToStudent($conn, $input['student_id'], $input['subject_id'], $input['approved']);
+        if ($result['inserted'] > 0) 
+        {
+            echo json_encode(["message" => "Asignación realizada"]);
+        }
+        else 
+        {
+            http_response_code(500);
+            echo json_encode(["error" => "Error al asignar"]);
+        }
+  }
+  else{
+      http_response_code(409);
+      echo json_encode(["error"  => "Asignacion Duplicada o ya existente"]);
+  }
 }
 
 function handlePut($conn) 
