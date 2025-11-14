@@ -104,4 +104,15 @@ function removeStudentSubject($conn, $id)
 
     return ['deleted' => $stmt->affected_rows];
 }
+
+function Uniqueness($conn,$student_id, $subject_id)
+{
+    $sql= "SELECT * FROM students_subjects WHERE student_id= ? AND subject_id= ?";
+    $stmt=$conn->prepare($sql);
+    $stmt->bind_param("ii", $student_id, $subject_id);
+    $stmt->execute();
+    $result= $stmt->get_result();
+
+    return ($result->num_rows == 0);
+}
 ?>
