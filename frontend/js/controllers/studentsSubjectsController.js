@@ -84,7 +84,7 @@ function setupFormHandler()
         catch (err) 
         {
             console.error('Error guardando relación:', err.message);
-            alert("Error duplicacion de cosas");
+            alert("Error duplicacion de Asignacion");
         }
     });
 }
