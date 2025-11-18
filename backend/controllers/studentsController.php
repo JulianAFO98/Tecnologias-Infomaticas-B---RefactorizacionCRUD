@@ -50,27 +50,30 @@ function handlePost($conn)
     $input = json_decode(file_get_contents("php://input"), true);
     
     $email = $input['email'] ?? null;
-    
-    //Valido la existencia del email
-    $existingEmail = getStudentByEmail($conn, $email);
 
-    if ($existingEmail) {
-        //El email ya existe
-        http_response_code(409);
-        echo json_encode(["messageError" => "El email ya esta en uso",
-                          "errorData" => $email]);
-    }
-    else
+    if ($email)
     {
-        $result = createStudent($conn, $input['fullname'], $input['email'], $input['age']);
-        if ($result['inserted'] > 0) 
+        //Valido la existencia del email
+        $existingEmail = getStudentByEmail($conn, $email);
+        if ($existingEmail) 
         {
-            echo json_encode(["message" => "Estudiante agregado correctamente"]);
-        } 
-        else 
+            //El email ya existe
+            http_response_code(409);
+            echo json_encode(["messageError" => "El email ya esta en uso",
+                            "errorData" => $email]);
+        }
+        else
         {
-            http_response_code(500);
-            echo json_encode(["error" => "No se pudo agregar"]);
+            $result = createStudent($conn, $input['fullname'], $input['email'], $input['age']);
+            if ($result['inserted'] > 0) 
+            {
+                echo json_encode(["message" => "Estudiante agregado correctamente"]);
+            } 
+            else 
+            {
+                http_response_code(500);
+                echo json_encode(["error" => "No se pudo agregar"]);
+            }
         }
     }
 }
@@ -83,24 +86,28 @@ function handlePut($conn)
 
     $email = $input['email'] ?? null;
     
-    //Valido la existencia del email
-    if ($existingEmail) {
-        //El email ya existe
-        http_response_code(409);
-        echo json_encode(["messageError" => "El email ya esta en uso",
-                          "errorData" => $email]);
-    }
-    else
+    if ($email)
     {
-        $result = updateStudent($conn, $input['id'], $input['fullname'], $input['email'], $input['age']);
-        if ($result['updated'] > 0) 
+        //Valido la existencia del email
+        if ($existingEmail) 
         {
-            echo json_encode(["message" => "Actualizado correctamente"]);
-        } 
-        else 
+            //El email ya existe
+            http_response_code(409);
+            echo json_encode(["messageError" => "El email ya esta en uso",
+                            "errorData" => $email]);
+        }
+        else
         {
-            http_response_code(500);
-            echo json_encode(["error" => "No se pudo actualizar"]);
+            $result = updateStudent($conn, $input['id'], $input['fullname'], $input['email'], $input['age']);
+            if ($result['updated'] > 0) 
+            {
+                echo json_encode(["message" => "Actualizado correctamente"]);
+            } 
+            else 
+            {
+                http_response_code(500);
+                echo json_encode(["error" => "No se pudo actualizar"]);
+            }
         }
     }
 }
